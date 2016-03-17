@@ -1,0 +1,46 @@
+import unittest
+
+from mock import (patch, MagicMock)
+
+from securionpay import charges
+
+
+@patch('securionpay.resources.request')
+class TestCharges(unittest.TestCase):
+    def test_create(self, request):
+        charges.create({'some_param': 'some_value'})
+        request.assert_called_once_with('post',
+                                        'charges',
+                                        {'some_param': 'some_value'})
+
+    def test_get(self, request):
+        charges.get("chargeId")
+        request.assert_called_once_with('get',
+                                        'charges/chargeId',
+                                        None)
+
+    def test_update(self, request):
+        charges.update("chargeId", {'some_param': 'some_value'})
+        request.assert_called_once_with('post',
+                                        'charges/chargeId',
+                                        {'some_param': 'some_value'})
+
+    def test_capture(self, request):
+        charges.capture("chargeId")
+        request.assert_called_once_with('post',
+                                        'charges/chargeId/capture',
+                                        None)
+
+    def test_refund(self, request):
+        charges.refund("chargeId", {'some_param': 'some_value'})
+        request.assert_called_once_with('post',
+                                        'charges/chargeId/refund',
+                                        {'some_param': 'some_value'})
+
+    def test_list(self, request):
+        request.return_value = MagicMock(spec=['__getitem__'])
+        resp = charges.list({'some_param': 'some_value'})
+        request.assert_called_once_with('get',
+                                        'charges',
+                                        {'some_param': 'some_value'})
+        request.return_value.__getitem__.assert_called_once_with('list')
