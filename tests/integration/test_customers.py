@@ -9,7 +9,17 @@ class TestCustomers(TestCase):
         })
 
     def test_create_without_email(self):
-        self.assertRaises(api.SecurionPayException, api.customers.create, {})
+        exception = self.assertSecurionPayException(api.customers.create, {})
+        self.assertEqual(exception.type, "invalid_request")
+        self.assertEqual(exception.code, None)
+        self.assertEqual(exception.message, "email: may not be empty")
+        self.assertEqual(exception.charge_id, None)
+        self.assertEqual(exception.blacklist_rule_id, None)
 
     def test_get_with_invalid_id(self):
-        self.assertRaises(api.SecurionPayException, api.customers.get, '1')
+        exception = self.assertSecurionPayException(api.customers.get, '1')
+        self.assertEqual(exception.type, "invalid_request")
+        self.assertEqual(exception.code, None)
+        self.assertEqual(exception.message, "Requested Customer does not exist")
+        self.assertEqual(exception.charge_id, None)
+        self.assertEqual(exception.blacklist_rule_id, None)
