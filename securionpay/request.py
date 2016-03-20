@@ -4,7 +4,10 @@ import securionpay as api
 
 def request(method, path, params=None):
     resp = requests.request(method, '/'.join([api.url.rstrip('/'), path]), json=params, auth=(api.private_key, ''))
+    json = resp.json()
     if resp.status_code == 200:
-        return resp.json()
-    raise api.SecurionPayException('Server response status code: %d (%s)\nRequest parts: %s\nParams: %s' %
-                               (resp.status_code, resp.reason, path, str(params)))
+        return json
+    error = json.get('error')
+    if error is None:
+        raise api.SecurionPayException('Internal error', None, json, None, None)
+    raise api.SecurionPayException(error.get('type'), error.get('code'), error.get('message'), error.get('charge_id'), error.get('blacklist_rule_id'))
