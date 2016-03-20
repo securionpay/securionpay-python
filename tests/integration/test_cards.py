@@ -8,10 +8,16 @@ class TestCards(unittest.TestCase):
         customer = customers.create({
             'email': random_email()
         })
-        cards.create(customer['id'], {
+        cardholder_name = random_string()
+        card = cards.create(customer['id'], {
             'number': '4242424242424242',
             'expMonth': '12',
             'expYear': '2020',
             'cvc': '123',
-            'cardholderName': random_string()
+            'cardholderName': cardholder_name
         })
+        card = cards.get(card['customerId'], card['id'])
+        self.assertEqual(card['last4'], '4242')
+        self.assertEqual(card['expMonth'], '12')
+        self.assertEqual(card['expYear'], '2020')
+        self.assertEqual(card['cardholderName'], cardholder_name)
