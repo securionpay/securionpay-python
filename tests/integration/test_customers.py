@@ -1,16 +1,15 @@
-import unittest
-from securionpay import SecurionPayException, customers
+from testcase import api, TestCase
 from tests.integration import random_email
 
 
-class TestCustomers(unittest.TestCase):
+class TestCustomers(TestCase):
     def test_create(self):
-        customers.create({
+        api.customers.create({
             'email': random_email()
         })
 
     def test_create_without_email(self):
-        self.assertRaises(SecurionPayException, customers.create, {})
+        self.assertRaises(api.SecurionPayException, api.customers.create, {})
 
     def test_get_with_invalid_id(self):
-        self.assertRaises(SecurionPayException, customers.get, '1')
+        self.assertRaises(api.SecurionPayException, api.customers.get, '1')

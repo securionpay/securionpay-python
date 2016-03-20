@@ -1,9 +1,8 @@
-import unittest
-import securionpay as api
+from testcase import api, TestCase
 from tests.integration import random_email, random_string
 
 
-class TestCharges(unittest.TestCase):
+class TestCharges(TestCase):
     def test_create(self):
         email = random_email()
         customer = api.customers.create({

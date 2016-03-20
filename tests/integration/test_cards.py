@@ -1,22 +1,21 @@
-import unittest
-from securionpay import customers, cards
+from testcase import api, TestCase
 from tests.integration import random_email, random_string
 
 
-class TestCards(unittest.TestCase):
+class TestCards(TestCase):
     def test_create(self):
-        customer = customers.create({
+        customer = api.customers.create({
             'email': random_email()
         })
         cardholder_name = random_string()
-        card = cards.create(customer['id'], {
+        card = api.cards.create(customer['id'], {
             'number': '4242424242424242',
             'expMonth': '12',
             'expYear': '2020',
             'cvc': '123',
             'cardholderName': cardholder_name
         })
-        card = cards.get(card['customerId'], card['id'])
+        card = api.cards.get(card['customerId'], card['id'])
         self.assertEqual(card['last4'], '4242')
         self.assertEqual(card['expMonth'], '12')
         self.assertEqual(card['expYear'], '2020')
