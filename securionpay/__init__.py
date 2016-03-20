@@ -1,4 +1,4 @@
-from securionpay.config import (api_key, api_url)
+from securionpay.config import (private_key, url)
 from securionpay.exception import SecurionPayException
 from securionpay import resources
 
