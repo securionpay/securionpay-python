@@ -10,10 +10,7 @@ class TestCustomers(unittest.TestCase):
         })
 
     def test_create_without_email(self):
-        with self.assertRaises(SecurionPayException):
-            customers.create({
-            })
+        self.assertRaises(SecurionPayException, customers.create, {})
 
     def test_get_with_invalid_id(self):
-        with self.assertRaises(SecurionPayException):
-            customers.get('1')
+        self.assertRaises(SecurionPayException, customers.get, '1')
