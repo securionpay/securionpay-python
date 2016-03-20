@@ -1,4 +1,4 @@
-from testcase import api, TestCase
+from tests.integration.testcase import api, TestCase
 from tests.integration import random_email
 
 
