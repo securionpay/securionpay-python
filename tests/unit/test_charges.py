@@ -39,7 +39,7 @@ class TestCharges(unittest.TestCase):
 
     def test_list(self, request):
         request.return_value = MagicMock(spec=['__getitem__'])
-        resp = charges.list({'some_param': 'some_value'})
+        charges.list({'some_param': 'some_value'})
         request.assert_called_once_with('get',
                                         'charges',
                                         {'some_param': 'some_value'})

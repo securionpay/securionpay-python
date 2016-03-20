@@ -12,19 +12,19 @@ class TestCharges(unittest.TestCase):
         customer = api.customers.get(customer['id'])
         self.assertEqual(customer['email'], email)
 
-        cardholderName = random_string()
+        cardholder_name = random_string()
         card = api.cards.create(customer['id'], {
             'number': '4242424242424242',
             'expMonth': '12',
             'expYear': '2020',
             'cvc': '123',
-            'cardholderName': cardholderName
+            'cardholderName': cardholder_name
         })
         card = api.cards.get(card['customerId'], card['id'])
         self.assertEqual(card['last4'], '4242')
         self.assertEqual(card['expMonth'], '12')
         self.assertEqual(card['expYear'], '2020')
-        self.assertEqual(card['cardholderName'], cardholderName)
+        self.assertEqual(card['cardholderName'], cardholder_name)
 
         charge = api.charges.create({
             'amount': 1000,

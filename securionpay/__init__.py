@@ -1,6 +1,4 @@
-api_url = 'https://api.securionpay.com'
-api_key = 'pr_test_tXHm9qV9qV9bjIRHcQr9PLPa'
-
+from securionpay.config import (api_key, api_url)
 from securionpay.exception import SecurionPayException
 from securionpay import resources
 

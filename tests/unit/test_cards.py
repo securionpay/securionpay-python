@@ -33,7 +33,7 @@ class TestCards(unittest.TestCase):
 
     def test_list(self, request):
         request.return_value = MagicMock(spec=['__getitem__'])
-        resp = cards.list("cusId", {'some_param': 'some_value'})
+        cards.list("cusId", {'some_param': 'some_value'})
         request.assert_called_once_with('get',
                                         'customers/cusId/cards',
                                         {'some_param': 'some_value'})

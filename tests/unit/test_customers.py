@@ -33,7 +33,7 @@ class TestCustomers(unittest.TestCase):
 
     def test_list(self, request):
         request.return_value = MagicMock(spec=['__getitem__'])
-        resp = customers.list({'some_param': 'some_value'})
+        customers.list({'some_param': 'some_value'})
         request.assert_called_once_with('get',
                                         'customers',
                                         {'some_param': 'some_value'})

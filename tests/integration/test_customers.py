@@ -5,15 +5,15 @@ from tests.integration import random_email
 
 class TestCustomers(unittest.TestCase):
     def test_create(self):
-        resp = customers.create({
+        customers.create({
             'email': random_email()
         })
 
     def test_create_without_email(self):
         with self.assertRaises(SecurionPayException):
-            resp = customers.create({
+            customers.create({
             })
 
     def test_get_with_invalid_id(self):
         with self.assertRaises(SecurionPayException):
-            resp = customers.get('1')
+            customers.get('1')

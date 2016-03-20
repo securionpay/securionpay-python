@@ -9,7 +9,7 @@ class Resources(object):
     def __init__(self, obj):
         self.obj = obj
 
-    def request(self, method, parts, params = None):
+    def request(self, method, parts, params=None):
         return request(method, create_url([self.obj] + parts), params)
 
     def create(self, params):
@@ -32,7 +32,7 @@ class CustomerSubresource(object):
     def __init__(self, obj):
         self.obj = obj
 
-    def request(self, method, customer_id, parts, params = None):
+    def request(self, method, customer_id, parts, params=None):
         return request(method, create_url(['customers', customer_id, self.obj] + parts), params)
 
     def create(self, customer_id, params):
