@@ -1,72 +1,57 @@
-from securionpay.request import request
+from securionpay.request import request, create_url
 
 
-def create_url(parts):
-    return "/".join([str(part) for part in parts])
+class Resource(object):
+    def name(self):
+        return self.__class__.__name__.lower()
+
+    def url(self):
+        return create_url([self.name()])
+
+    def instance_url(self, id, parts=[]):
+        return create_url([self.name(), id] + parts)
 
 
-class Resources(object):
-    def __init__(self, obj):
-        self.obj = obj
-
-    def request(self, method, parts, params=None):
-        return request(method, create_url([self.obj] + parts), params)
-
+class CreateableResource(Resource):
     def create(self, params):
-        return self.request('POST', [], params)
+        return request('POST', self.url(), params)
 
+
+class GettableResource(Resource):
     def get(self, id):
-        return self.request('GET', [id])
+        return request('GET', self.instance_url(id), None)
 
+
+class UpdateableResource(Resource):
     def update(self, id, params):
-        return self.request('POST', [id], params)
+        return request('POST', self.instance_url(id), params)
 
+
+class DeleteableResource(Resource):
     def delete(self, id):
-        return self.request('DELETE', [id])
+        return request('DELETE', self.instance_url(id), None)
 
+
+class ListableResource(Resource):
     def list(self, params=None):
-        return self.request('GET', [], params)['list']
+        return request('GET', self.url(), params)['list']
 
 
-class CustomerSubresource(object):
-    def __init__(self, obj):
-        self.obj = obj
-
-    def request(self, method, customer_id, parts, params=None):
-        return request(method, create_url(['customers', customer_id, self.obj] + parts), params)
-
-    def create(self, customer_id, params):
-        return self.request('POST', customer_id, [], params)
-
-    def get(self, customer_id, id):
-        return self.request('GET', customer_id, [id])
-
-    def update(self, customer_id, id, params):
-        return self.request('POST', customer_id, [id], params)
-
-    def delete(self, customer_id, id):
-        return self.request('DELETE', customer_id, [id])
-
-    def list(self, customer_id, params=None):
-        return self.request('GET', customer_id, [], params)['list']
+class Customers(GettableResource,
+                CreateableResource,
+                UpdateableResource,
+                DeleteableResource,
+                ListableResource):
+    pass
 
 
-class Cards(CustomerSubresource):
-    def __init__(self):
-        super(Cards, self).__init__('cards')
-
-
-class Customers(Resources):
-    def __init__(self):
-        super(Customers, self).__init__('customers')
-
-
-class Charges(Resources):
-    def __init__(self):
-        super(Charges, self).__init__('charges')
+class Charges(GettableResource,
+              CreateableResource,
+              UpdateableResource,
+              ListableResource):
 
     def capture(self, charge_id):
-        return self.request('POST', [charge_id, 'capture'])
+        return request('POST', self.instance_url(charge_id, ['capture']), None)
 
     def refund(self, charge_id, params=None):
-        return self.request('POST', [charge_id, 'refund'], params)
+        return request('POST', self.instance_url(charge_id, ['refund']), params)
