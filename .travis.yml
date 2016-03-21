@@ -12,5 +12,6 @@ install:
   - pip install .
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
+
 # command to run tests
-script: nosetests
+script: PRIVATE_KEY=pr_test_FjW0q2HMs40Jj3KGua5294sp nosetests
