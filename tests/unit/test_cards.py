@@ -5,7 +5,7 @@ from mock import (patch, MagicMock)
 from securionpay import cards
 
 
-@patch('securionpay.resources.request')
+@patch('securionpay.customer_resources.request')
 class TestCards(unittest.TestCase):
     def test_create(self, request):
         cards.create("cusId", {'some_param': 'some_value'})
