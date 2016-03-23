@@ -3,19 +3,19 @@ from securionpay.resource import Resource
 
 class Charges(Resource):
     def create(self, params):
-        return self.request('POST', [self.name()], params)
+        return self._post('charges', params)
 
-    def get(self, id):
-        return self.request('GET', [self.name(), id])
+    def get(self, charge_id):
+        return self._get('charges/%s' % charge_id)
 
-    def update(self, id, params):
-        return self.request('POST', [self.name(), id], params)
+    def update(self, charge_id, params):
+        return self._post('charges/%s' % charge_id, params)
 
     def list(self, params=None):
-        return self.request('GET', [self.name()], params)['list']
+        return self._get('charges', params)['list']
 
     def capture(self, charge_id):
-        return self.request('POST', [self.name(), charge_id, 'capture'])
+        return self._post('charges/%s/capture' % charge_id)
 
     def refund(self, charge_id, params=None):
-        return self.request('POST', [self.name(), charge_id, 'refund'], params)
+        return self._post('charges/%s/refund' % charge_id, params)

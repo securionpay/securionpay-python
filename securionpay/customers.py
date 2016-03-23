@@ -3,16 +3,16 @@ from securionpay.resource import Resource
 
 class Customers(Resource):
     def create(self, params):
-        return self.request('POST', [self.name()], params)
+        return self._post('customers', params)
 
-    def get(self, id):
-        return self.request('GET', [self.name(), id])
+    def get(self, customer_id):
+        return self._get('customers/%s' % customer_id)
 
-    def update(self, id, params):
-        return self.request('POST', [self.name(), id], params)
+    def update(self, customer_id, params):
+        return self._post('customers/%s' % customer_id, params)
 
-    def delete(self, id):
-        return self.request('DELETE', [self.name(), id])
+    def delete(self, customer_id):
+        return self._delete('customers/%s' % customer_id)
 
     def list(self, params=None):
-        return self.request('GET', [self.name()], params)['list']
+        return self._get('customers', params)['list']

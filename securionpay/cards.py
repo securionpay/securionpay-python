@@ -2,17 +2,23 @@ from securionpay.resource import Resource
 
 
 class Cards(Resource):
+    def path(self, customer_id, card_id=None):
+        path = 'customers/%s/cards' % customer_id
+        if card_id:
+            path += '/%s' % card_id
+        return path
+
     def create(self, customer_id, params):
-        return self.request('POST', ['customers', customer_id, self.name()], params)
+        return self._post(self.path(customer_id), params)
 
-    def get(self, customer_id, id):
-        return self.request('GET', ['customers', customer_id, self.name(), id])
+    def get(self, customer_id, card_id):
+        return self._get(self.path(customer_id, card_id))
 
-    def update(self, customer_id, id, params):
-        return self.request('POST', ['customers', customer_id, self.name(), id], params)
+    def update(self, customer_id, card_id, params):
+        return self._post(self.path(customer_id, card_id), params)
 
-    def delete(self, customer_id, id):
-        return self.request('DELETE', ['customers', customer_id, self.name(), id])
+    def delete(self, customer_id, card_id):
+        return self._delete(self.path(customer_id, card_id))
 
     def list(self, customer_id, params=None):
-        return self.request('GET', ['customers', customer_id, self.name()], params)['list']
+        return self._get(self.path(customer_id), params)['list']
