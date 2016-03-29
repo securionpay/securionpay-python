@@ -1,5 +1,7 @@
 Python library for SecurionPay API
 ===================================
+[![Build Status](https://travis-ci.org/securionpay/securionpay-python.svg?branch=master)](https://travis-ci.org/securionpay/securionpay-python)
+[![Code Climate](https://codeclimate.com/github/securionpay/securionpay-python/badges/gpa.svg)](https://codeclimate.com/github/securionpay/securionpay-python)
 
 For detailed description of parameters for available methods
 please visit https://securionpay.com/docs/api

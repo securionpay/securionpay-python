@@ -6,7 +6,6 @@ import securionpay as api
 class TestCase(unittest.TestCase):
     def setUp(self):
         api.private_key = os.getenv('PRIVATE_KEY')
-        api.url = os.getenv('URL', 'https://api.securionpay.com')
 
     def tearDown(self):
         api.private_key = None
