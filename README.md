@@ -86,8 +86,3 @@ To run integration tests:
 ```
 PRIVATE_KEY=pk_test_myprivatekey nosetests -w tests/integration
 ```
-
-To run integration tests against environment other than default:
-```
-PRIVATE_KEY=pk_test_myprivatekey URL=http://mysecurionenv.com nosetests -w tests/integration
-```
