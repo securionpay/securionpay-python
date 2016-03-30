@@ -17,7 +17,7 @@ class Resource(object):
 
     @staticmethod
     def request(method, path, params=None):
-        url = api.url.rstrip('/') + '/' + path
+        url = api.url.rstrip('/') + path
         resp = requests.request(method, url, json=params, auth=(api.private_key, ''))
         json = resp.json()
         if resp.status_code == 200:
