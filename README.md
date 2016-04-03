@@ -65,7 +65,17 @@ When ``params`` is one of method arguments please refer to detailed API docs (li
     - [update(customerId, cardId, params)](https://securionpay.com/docs/api#card-update)
     - [delete(customerId, cardId)](https://securionpay.com/docs/api#card-delete)
     - [list(customerId, [params])](https://securionpay.com/docs/api#card-list)
-
+- blacklist
+    - [create(params)](https://securionpay.com/docs/api#blacklist-rule-create)
+    - [get(blacklistRuleId)](https://securionpay.com/docs/api#blacklist-rule-retrieve)
+    - [delete(blacklistRuleId)](https://securionpay.com/docs/api#blacklist-rule-delete)
+    - [list([params])](https://securionpay.com/docs/api#blacklist-rule-list)
+- crossSaleOffers
+    - [create(params)](https://securionpay.com/docs/api#cross-sale-offer-create)
+    - [get(crossSaleOfferId)](https://securionpay.com/docs/api#cross-sale-offer-retrieve)
+    - [update(crossSaleOfferId, params)](https://securionpay.com/docs/api#cross-sale-offer-update)
+    - [delete(crossSaleOfferId)](https://securionpay.com/docs/api#cross-sale-offer-delete)
+    - [list([params])](https://securionpay.com/docs/api#cross-sale-offer-list)
 Developing
 ----------
 
