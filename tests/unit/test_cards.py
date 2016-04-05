@@ -37,4 +37,3 @@ class TestCards(unittest.TestCase):
         request.assert_called_once_with('GET',
                                         '/customers/cusId/cards',
                                         {'some_param': 'some_value'})
-        request.return_value.__getitem__.assert_called_once_with('list')

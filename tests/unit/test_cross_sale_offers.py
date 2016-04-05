@@ -37,4 +37,3 @@ class TestCrossSaleOffers(unittest.TestCase):
         request.assert_called_once_with('GET',
                                         '/cross_sale_offers',
                                         {'some_param': 'some_value'})
-        request.return_value.__getitem__.assert_called_once_with('list')

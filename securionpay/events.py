@@ -6,4 +6,4 @@ class Events(Resource):
         return self._get('/events/%s' % event_id)
 
     def list(self, params=None):
-        return self._get('/events', params)['list']
+        return self._get('/events', params)

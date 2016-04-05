@@ -15,4 +15,4 @@ class CrossSaleOffers(Resource):
         return self._delete('/cross_sale_offers/%s' % cross_sale_offer_id)
 
     def list(self, params=None):
-        return self._get('/cross_sale_offers', params)['list']
+        return self._get('/cross_sale_offers', params)
