@@ -1,7 +1,5 @@
 import unittest
-
-from mock import (patch, MagicMock)
-
+from mock import patch
 from securionpay import cross_sale_offers
 
 
@@ -32,7 +30,6 @@ class TestCrossSaleOffers(unittest.TestCase):
                                         None)
 
     def test_list(self, request):
-        request.return_value = MagicMock(spec=['__getitem__'])
         cross_sale_offers.list({'some_param': 'some_value'})
         request.assert_called_once_with('GET',
                                         '/cross_sale_offers',

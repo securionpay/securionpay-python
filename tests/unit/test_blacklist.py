@@ -1,7 +1,5 @@
 import unittest
-
-from mock import (patch, MagicMock)
-
+from mock import patch
 from securionpay import blacklist
 
 
@@ -26,7 +24,6 @@ class TestBlacklist(unittest.TestCase):
                                         None)
 
     def test_list(self, request):
-        request.return_value = MagicMock(spec=['__getitem__'])
         blacklist.list({'some_param': 'some_value'})
         request.assert_called_once_with('GET',
                                         '/blacklist',
