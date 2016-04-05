@@ -1,7 +1,7 @@
 from securionpay.config import (private_key, url)
 from securionpay.exception import SecurionPayException
 from securionpay import resource, cards, customers, charges, blacklist, cross_sale_offers, customer_records, events, \
-    plans, subscriptions, tokens
+    plans, subscriptions, tokens, checkout_request
 
 customers = customers.Customers()
 charges = charges.Charges()
