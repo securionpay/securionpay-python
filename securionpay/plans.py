@@ -15,4 +15,4 @@ class Plans(Resource):
         return self._delete('/plans/%s' % plan_id)
 
     def list(self, params=None):
-        return self._get('/plans', params)['list']
+        return self._get('/plans', params)

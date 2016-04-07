@@ -15,4 +15,4 @@ class Customers(Resource):
         return self._delete('/customers/%s' % customer_id)
 
     def list(self, params=None):
-        return self._get('/customers', params)['list']
+        return self._get('/customers', params)

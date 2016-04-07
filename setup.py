@@ -59,7 +59,7 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         # 'dev': ['check-manifest'],
-        'test': ['coverage'],
+        'test': ['coverage', 'mock', 'nose'],
     },
     test_suite="tests",
 

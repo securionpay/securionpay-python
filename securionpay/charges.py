@@ -12,7 +12,7 @@ class Charges(Resource):
         return self._post('/charges/%s' % charge_id, params)
 
     def list(self, params=None):
-        return self._get('/charges', params)['list']
+        return self._get('/charges', params)
 
     def capture(self, charge_id):
         return self._post('/charges/%s/capture' % charge_id)

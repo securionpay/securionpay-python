@@ -12,4 +12,4 @@ class Blacklist(Resource):
         return self._delete('/blacklist/%s' % blacklist_rule_id)
 
     def list(self, params=None):
-        return self._get('/blacklist', params)['list']
+        return self._get('/blacklist', params)

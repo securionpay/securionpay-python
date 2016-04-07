@@ -1,7 +1,5 @@
 import unittest
-
-from mock import (patch, MagicMock)
-
+from mock import patch
 from securionpay import charges
 
 
@@ -38,9 +36,7 @@ class TestCharges(unittest.TestCase):
                                         {'some_param': 'some_value'})
 
     def test_list(self, request):
-        request.return_value = MagicMock(spec=['__getitem__'])
         charges.list({'some_param': 'some_value'})
         request.assert_called_once_with('GET',
                                         '/charges',
                                         {'some_param': 'some_value'})
-        request.return_value.__getitem__.assert_called_once_with('list')

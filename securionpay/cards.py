@@ -21,4 +21,4 @@ class Cards(Resource):
         return self._delete(self.path(customer_id, card_id))
 
     def list(self, customer_id, params=None):
-        return self._get(self.path(customer_id), params)['list']
+        return self._get(self.path(customer_id), params)
