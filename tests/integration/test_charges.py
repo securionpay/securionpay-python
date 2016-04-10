@@ -34,3 +34,26 @@ class TestCharges(TestCase):
         self.assertEquals(charge['amount'], 1000)
         self.assertEquals(charge['currency'], 'EUR')
         self.assertEquals(charge['customerId'], card['customerId'])
+
+    def test_create_twice(self):
+        customer = api.customers.create({
+            'email': random_email()
+        })
+        charge = api.charges.create({
+            'amount': 2000,
+            'currency': 'EUR',
+            'customerId': customer['id'],
+            'card': {
+                'number': '4242424242424242',
+                'expMonth': '12',
+                'expYear': '2055',
+                'cvc': '123'
+            }
+        })
+        second_charge = api.charges.create({
+            'amount': 1000,
+            'currency': 'EUR',
+            'customerId': charge['customerId']
+        })
+        self.assertEquals(second_charge['amount'], 1000)
+        self.assertEquals(second_charge['customerId'], charge['customerId'])
