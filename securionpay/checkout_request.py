@@ -9,7 +9,7 @@ def sign(checkout_request):
     try:
         basestring
     except NameError:
-        basestring=str
+        basestring = str
 
     if not isinstance(checkout_request, basestring):
         checkout_request = json.dumps(checkout_request, sort_keys=True, separators=(',', ':'))

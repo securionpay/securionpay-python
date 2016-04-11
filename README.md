@@ -105,6 +105,7 @@ When ``params`` is one of method arguments please refer to detailed API docs (li
     - [listFees(customerRecordId, [params])](https://securionpay.com/docs/api#customer-record-fee-list)
     - [getProfit(customerRecordId, customerRecordProfitId)](https://securionpay.com/docs/api#customer-record-profit-retrieve)
     - [listProfits(customerRecordId, [params])](https://securionpay.com/docs/api#customer-record-profit-list)
+
 Developing
 ----------
 
