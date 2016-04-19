@@ -31,9 +31,9 @@ class TestCharges(TestCase):
             'customerId': card['customerId']
         })
         charge = api.charges.get(charge['id'])
-        self.assertEquals(charge['amount'], 1000)
-        self.assertEquals(charge['currency'], 'EUR')
-        self.assertEquals(charge['customerId'], card['customerId'])
+        self.assertEqual(charge['amount'], 1000)
+        self.assertEqual(charge['currency'], 'EUR')
+        self.assertEqual(charge['customerId'], card['customerId'])
 
     def test_create_twice(self):
         customer = api.customers.create({
@@ -55,5 +55,5 @@ class TestCharges(TestCase):
             'currency': 'EUR',
             'customerId': charge['customerId']
         })
-        self.assertEquals(second_charge['amount'], 1000)
-        self.assertEquals(second_charge['customerId'], charge['customerId'])
+        self.assertEqual(second_charge['amount'], 1000)
+        self.assertEqual(second_charge['customerId'], charge['customerId'])

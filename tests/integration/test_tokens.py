@@ -22,11 +22,11 @@ class TestTokens(TestCase):
         charge = api.charges.refund(charge['id'], {
             'amount': 1000
         })
-        self.assertEquals(charge['amount'], 1000)
-        self.assertEquals(charge['captured'], True)
-        self.assertEquals(charge['refunded'], True)
+        self.assertEqual(charge['amount'], 1000)
+        self.assertEqual(charge['captured'], True)
+        self.assertEqual(charge['refunded'], True)
 
-    def test_subcribe_via_token(self):
+    def test_subscribe_via_token(self):
         plan = api.plans.create({
             'amount': 1000,
             'currency': 'EUR',
@@ -46,5 +46,5 @@ class TestTokens(TestCase):
             'planId': plan['id'],
             'card': token['id']
         })
-        self.assertEquals(subscription['planId'], plan['id'])
-        self.assertEquals(subscription['customerId'], customer['id'])
+        self.assertEqual(subscription['planId'], plan['id'])
+        self.assertEqual(subscription['customerId'], customer['id'])
