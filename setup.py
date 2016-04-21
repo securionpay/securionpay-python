@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='securionpay',
-    version='1.0.0',
+    version='1.0.1',
     description='Python library for SecurionPay API',
     url='https://github.com/securionpay/securionpay-python',
     author='Grzegorz Terlikowski',
