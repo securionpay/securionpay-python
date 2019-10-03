@@ -3,9 +3,9 @@ from securionpay.resource import Resource
 
 class Subscriptions(Resource):
     def path(self, customer_id, subscription_id=None):
-        path = '/customers/%s/subscriptions' % customer_id
+        path = "/customers/%s/subscriptions" % customer_id
         if subscription_id:
-            path += '/%s' % subscription_id
+            path += "/%s" % subscription_id
         return path
 
     def create(self, customer_id, params):

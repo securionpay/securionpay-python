@@ -3,9 +3,9 @@ from securionpay.resource import Resource
 
 class Cards(Resource):
     def path(self, customer_id, card_id=None):
-        path = '/customers/%s/cards' % customer_id
+        path = "/customers/%s/cards" % customer_id
         if card_id:
-            path += '/%s' % card_id
+            path += "/%s" % card_id
         return path
 
     def create(self, customer_id, params):

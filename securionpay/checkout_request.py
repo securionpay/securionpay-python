@@ -12,7 +12,13 @@ def sign(checkout_request):
         basestring = str
 
     if not isinstance(checkout_request, basestring):
-        checkout_request = json.dumps(checkout_request, sort_keys=True, separators=(',', ':'))
+        checkout_request = json.dumps(
+            checkout_request, sort_keys=True, separators=(",", ":")
+        )
 
-    digest = hmac.new(api.private_key.encode(), msg=checkout_request.encode(), digestmod=hashlib.sha256).hexdigest()
-    return base64.b64encode((digest + '|' + checkout_request).encode()).decode()
+    digest = hmac.new(
+        api.private_key.encode(),
+        msg=checkout_request.encode(),
+        digestmod=hashlib.sha256,
+    ).hexdigest()
+    return base64.b64encode((digest + "|" + checkout_request).encode()).decode()
