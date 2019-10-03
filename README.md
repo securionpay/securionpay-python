@@ -124,6 +124,10 @@ To run integration tests:
 PRIVATE_KEY=pk_test_myprivatekey nosetests -w tests/integration
 ```
 
+Format the package files using `black`:
+```sh
+black setup.py securionpay/ tests/
+```
 
 Documentation
 ----------
