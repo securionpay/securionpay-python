@@ -106,6 +106,18 @@ When ``params`` is one of method arguments please refer to detailed API docs (li
 Developing
 ----------
 
+Optionally setup a virtual environment (requires the `virtualenv` python package):
+```sh
+virtualenv env
+source env/bin/activate
+```
+
+Install the package dependencies:
+```sh
+pip install -r requirements.txt
+pip install -r test_requirements.txt
+```
+
 To connect to different backend:
 ```
 import securionpay as api
@@ -123,7 +135,6 @@ To run integration tests:
 ```
 PRIVATE_KEY=pk_test_myprivatekey nosetests -w tests/integration
 ```
-
 
 Documentation
 ----------
