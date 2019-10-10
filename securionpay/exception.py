@@ -7,5 +7,18 @@ class SecurionPayException(Exception):
         self.blacklist_rule_id = blacklist_rule_id
 
     def __str__(self):
-        return 'SecurionPayException:\n\tType: %s\n\tCode: %s\n\tMessage: %s\n\tChargeId: %s\n\tBlacklistRuleId: %s' %\
-               tuple([str(v) for v in [self.type, self.code, self.message, self.charge_id, self.blacklist_rule_id]])
+        return (
+            "SecurionPayException:\n\tType: %s\n\tCode: %s\n\tMessage: %s\n\tChargeId: %s\n\tBlacklistRuleId: %s"
+            % tuple(
+                [
+                    str(v)
+                    for v in [
+                        self.type,
+                        self.code,
+                        self.message,
+                        self.charge_id,
+                        self.blacklist_rule_id,
+                    ]
+                ]
+            )
+        )

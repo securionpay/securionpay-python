@@ -17,4 +17,6 @@ env:
   - PRIVATE_KEY=pr_test_FjW0q2HMs40Jj3KGua5294sp
 
 # command to run tests
-script: nosetests
+script:
+  - black --check setup.py securionpay/ tests/
+  - nosetests
