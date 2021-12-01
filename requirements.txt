@@ -1,2 +1,2 @@
 requests
-black
+black; python_version >= '3.0'
