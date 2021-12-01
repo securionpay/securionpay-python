@@ -1,12 +1,14 @@
-import json
-import hmac
-import hashlib
 import base64
+import hashlib
+import hmac
+import json
+
 import securionpay as api
 
 
 def sign(checkout_request):
     try:
+        # noinspection PyUnresolvedReferences
         basestring
     except NameError:
         basestring = str

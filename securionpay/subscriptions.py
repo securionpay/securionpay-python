@@ -2,23 +2,17 @@ from securionpay.resource import Resource
 
 
 class Subscriptions(Resource):
-    def path(self, customer_id, subscription_id=None):
-        path = "/customers/%s/subscriptions" % customer_id
-        if subscription_id:
-            path += "/%s" % subscription_id
-        return path
+    def create(self, params):
+        return self._post("/subscriptions", params)
 
-    def create(self, customer_id, params):
-        return self._post(self.path(customer_id), params)
+    def get(self, subscription_id):
+        return self._get("/subscriptions/%s" % subscription_id)
 
-    def get(self, customer_id, subscription_id):
-        return self._get(self.path(customer_id, subscription_id))
+    def update(self, subscription_id, params):
+        return self._post("/subscriptions/%s" % subscription_id, params)
 
-    def update(self, customer_id, subscription_id, params):
-        return self._post(self.path(customer_id, subscription_id), params)
+    def cancel(self, subscription_id):
+        return self._delete("/subscriptions/%s" % subscription_id)
 
-    def cancel(self, customer_id, subscription_id):
-        return self._delete(self.path(customer_id, subscription_id))
-
-    def list(self, customer_id, params=None):
-        return self._get(self.path(customer_id), params)
+    def list(self, params=None):
+        return self._get("/subscriptions", params)

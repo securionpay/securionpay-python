@@ -1,5 +1,5 @@
-from tests.integration.testcase import api, TestCase
 from tests.integration import random_email, random_string
+from tests.integration.testcase import api, TestCase
 
 
 class TestTokens(TestCase):
@@ -42,7 +42,7 @@ class TestTokens(TestCase):
             }
         )
         subscription = api.subscriptions.create(
-            customer["id"], {"planId": plan["id"], "card": token["id"]}
+            {"customerId": customer["id"], "planId": plan["id"], "card": token["id"]}
         )
         self.assertEqual(subscription["planId"], plan["id"])
         self.assertEqual(subscription["customerId"], customer["id"])

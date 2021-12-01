@@ -1,29 +1,33 @@
-from securionpay.exception import SecurionPayException
 from securionpay import (
-    resource,
-    cards,
-    customers,
-    charges,
     blacklist,
+    cards,
+    charges,
+    checkout_request,
+    credits,
     cross_sale_offers,
-    customer_records,
+    customers,
+    disputes,
     events,
+    fraud_warnings,
     plans,
+    resource,
     subscriptions,
     tokens,
-    checkout_request,
 )
+from securionpay.exception import SecurionPayException
 
 url = "https://api.securionpay.com"
 secret_key = None
 
-customers = customers.Customers()
-charges = charges.Charges()
-cards = cards.Cards()
 blacklist = blacklist.Blacklist()
+cards = cards.Cards()
+charges = charges.Charges()
+credits = credits.Credits()
 cross_sale_offers = cross_sale_offers.CrossSaleOffers()
-customer_records = customer_records.CustomerRecords()
+customers = customers.Customers()
+disputes = disputes.Disputes()
 events = events.Events()
+fraud_warnings = fraud_warnings.FraudWarnings()
 plans = plans.Plans()
 subscriptions = subscriptions.Subscriptions()
 tokens = tokens.Tokens()
