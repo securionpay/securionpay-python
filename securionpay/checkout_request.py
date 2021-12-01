@@ -17,7 +17,7 @@ def sign(checkout_request):
         )
 
     digest = hmac.new(
-        api.private_key.encode(),
+        api.secret_key.encode(),
         msg=checkout_request.encode(),
         digestmod=hashlib.sha256,
     ).hexdigest()

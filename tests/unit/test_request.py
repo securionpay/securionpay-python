@@ -12,7 +12,7 @@ class TestRequest(unittest.TestCase):
         requests.request.assert_called_once_with(
             "GET",
             api.url + "/some_url",
-            auth=(api.private_key, ""),
+            auth=(api.secret_key, ""),
             params={"some_param": "some_value"},
         )
 
@@ -23,7 +23,7 @@ class TestRequest(unittest.TestCase):
         requests.request.assert_called_once_with(
             "POST",
             api.url + "/some_url",
-            auth=(api.private_key, ""),
+            auth=(api.secret_key, ""),
             json={"some_param": "some_value"},
         )
 
@@ -36,6 +36,6 @@ class TestRequest(unittest.TestCase):
         requests.request.assert_called_once_with(
             "DELETE",
             api.url + "/some_url",
-            auth=(api.private_key, ""),
+            auth=(api.secret_key, ""),
             params={"some_param": "some_value"},
         )

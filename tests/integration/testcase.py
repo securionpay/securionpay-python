@@ -5,10 +5,10 @@ import securionpay as api
 
 class TestCase(unittest.TestCase):
     def setUp(self):
-        api.private_key = os.getenv("PRIVATE_KEY")
+        api.secret_key = os.getenv("SECRET_KEY")
 
     def tearDown(self):
-        api.private_key = None
+        api.secret_key = None
 
     def assertSecurionPayException(self, fun, *args, **kwargs):
         try:

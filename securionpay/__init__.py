@@ -15,7 +15,7 @@ from securionpay import (
 )
 
 url = "https://api.securionpay.com"
-private_key = None
+secret_key = None
 
 customers = customers.Customers()
 charges = charges.Charges()

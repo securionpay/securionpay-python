@@ -19,7 +19,7 @@ class Resource(object):
     def request(method, path, params=None):
         url = api.url.rstrip("/") + path
         data = {"params" if method in ["GET", "DELETE"] else "json": params}
-        resp = requests.request(method, url, auth=(api.private_key, ""), **data)
+        resp = requests.request(method, url, auth=(api.secret_key, ""), **data)
 
         json = resp.json()
         if resp.status_code == 200:

@@ -15,7 +15,7 @@ Quick start
 
 ```
 import securionpay as api
-api.private_key = 'pk_test_myprivatekey'
+api.secret_key = 'pk_test_myprivatekey'
 
 try:
     customer = api.customers.create({
@@ -121,7 +121,7 @@ pip install -r test_requirements.txt
 To connect to different backend:
 ```
 import securionpay as api
-api.private_key = 'pk_test_myprivatekey'
+api.secret_key = 'pk_test_myprivatekey'
 api.url = 'http://mysecurionenv.com'
 ```
 
@@ -133,7 +133,7 @@ coverage report -m
 
 To run integration tests:
 ```
-PRIVATE_KEY=pk_test_myprivatekey nosetests -w tests/integration
+SECRET_KEY=pk_test_myprivatekey nosetests -w tests/integration
 ```
 
 Format the package files using `black`:

@@ -14,7 +14,7 @@ install:
 
 # environment for testing
 env:
-  - PRIVATE_KEY=pr_test_FjW0q2HMs40Jj3KGua5294sp
+  - SECRET_KEY=pr_test_FjW0q2HMs40Jj3KGua5294sp
 
 # command to run tests
 script:
