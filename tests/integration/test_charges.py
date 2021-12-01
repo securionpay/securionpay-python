@@ -15,7 +15,7 @@ class TestCharges(TestCase):
             {
                 "number": "4242424242424242",
                 "expMonth": "12",
-                "expYear": "2020",
+                "expYear": "2055",
                 "cvc": "123",
                 "cardholderName": cardholder_name,
             },
@@ -23,7 +23,7 @@ class TestCharges(TestCase):
         card = api.cards.get(card["customerId"], card["id"])
         self.assertEqual(card["last4"], "4242")
         self.assertEqual(card["expMonth"], "12")
-        self.assertEqual(card["expYear"], "2020")
+        self.assertEqual(card["expYear"], "2055")
         self.assertEqual(card["cardholderName"], cardholder_name)
 
         charge = api.charges.create(

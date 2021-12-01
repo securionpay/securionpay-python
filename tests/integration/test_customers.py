@@ -10,7 +10,7 @@ class TestCustomers(TestCase):
         exception = self.assertSecurionPayException(api.customers.create, {})
         self.assertEqual(exception.type, "invalid_request")
         self.assertEqual(exception.code, None)
-        self.assertEqual(exception.message, "email: may not be empty")
+        self.assertEqual(exception.message, "email: Must not be empty.")
         self.assertEqual(exception.charge_id, None)
         self.assertEqual(exception.blacklist_rule_id, None)
 
@@ -18,7 +18,7 @@ class TestCustomers(TestCase):
         exception = self.assertSecurionPayException(api.customers.get, "1")
         self.assertEqual(exception.type, "invalid_request")
         self.assertEqual(exception.code, None)
-        self.assertEqual(exception.message, "Requested Customer does not exist")
+        self.assertEqual(exception.message, "Customer '1' does not exist")
         self.assertEqual(exception.charge_id, None)
         self.assertEqual(exception.blacklist_rule_id, None)
 
