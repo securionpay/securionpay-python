@@ -1,7 +1,6 @@
 Python library for SecurionPay API
 ===================================
-[![Build Status](https://travis-ci.org/securionpay/securionpay-python.svg?branch=master)](https://travis-ci.org/securionpay/securionpay-python)
-[![Code Climate](https://codeclimate.com/github/securionpay/securionpay-python/badges/gpa.svg)](https://codeclimate.com/github/securionpay/securionpay-python)
+[![Build](https://github.com/securionpay/securionpay-python/actions/workflows/build.yml/badge.svg)](https://github.com/el-dot/securionpay-python/actions/workflows/build.yml)
 
 Installation
 ------------
@@ -144,4 +143,4 @@ black setup.py securionpay/ tests/
 Documentation
 ----------
 
-For further information, please refer to our official documentation at https://securionpay.com/docs.
+For further information, please refer to our official documentation at [https://securionpay.com/docs](https://securionpay.com/docs).

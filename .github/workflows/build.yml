@@ -1,0 +1,56 @@
+name: Build and validate
+on: [ push, pull_request ]
+
+jobs:
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 2.7, 3.6, 3.9 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip -r requirements.txt -r test_requirements.txt
+
+      - name: Run tests
+        run: nosetests -w tests/unit
+
+  integration-tests:
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    name: Integration tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 2.7, 3.6, 3.9 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip -r requirements.txt -r test_requirements.txt
+
+      - name: Run tests
+        run: nosetests -w tests/integration
+
+  style-check:
+    name: Style check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip -r requirements.txt -r test_requirements.txt
+
+      - name: Run style checks
+        run: black --check setup.py securionpay/ tests/
