@@ -1,6 +1,5 @@
-
-def subscription_req(customer_id, plan_id):
+def subscription_req(customerId, planId):
     return {
-        "customerId": customer_id,
-        "planId": plan_id,
+        "customerId": customerId,
+        "planId": planId,
     }
