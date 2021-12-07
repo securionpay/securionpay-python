@@ -46,7 +46,10 @@ class TestCards(TestCase):
         updated = api.cards.update(created["customerId"], created["id"], update_request)
 
         # then
-        self.assertEqual(updated, {**created, **update_request})
+        expected = dict()
+        expected.update(created)
+        expected.update(update_request)
+        self.assertEqual(updated, expected)
 
     def test_delete(self):
         # given
