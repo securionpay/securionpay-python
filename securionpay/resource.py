@@ -1,5 +1,9 @@
-import securionpay as api
+import sys
+
 import requests
+
+import securionpay as api
+from securionpay.__version__ import __version__
 
 
 class Resource(object):
@@ -7,19 +11,25 @@ class Resource(object):
         return self.__class__.__name__.lower()
 
     def _get(self, path, params=None):
-        return self.request("GET", path, params)
+        return self.__request("GET", path, params)
 
     def _post(self, path, params=None):
-        return self.request("POST", path, params)
+        return self.__request("POST", path, params)
 
     def _delete(self, path, params=None):
-        return self.request("DELETE", path, params)
+        return self.__request("DELETE", path, params)
 
-    @staticmethod
-    def request(method, path, params=None):
+    @classmethod
+    def __request(cls, method, path, params=None):
         url = api.url.rstrip("/") + path
-        data = {"params" if method in ["GET", "DELETE"] else "json": params}
-        resp = requests.request(method, url, auth=(api.secret_key, ""), **data)
+        data = {("params" if method in ["GET", "DELETE"] else "json"): params}
+        resp = requests.request(
+            method,
+            url,
+            auth=(api.secret_key, ""),
+            headers=cls.__create_headers(),
+            **data
+        )
 
         json = resp.json()
         if resp.status_code == 200:
@@ -34,3 +44,14 @@ class Resource(object):
             error.get("charge_id"),
             error.get("blacklist_rule_id"),
         )
+
+    @classmethod
+    def __create_headers(cls):
+        user_agent = "SecurionPay-Python/%s (Python/%s.%s.%s)" % (
+            __version__,
+            sys.version_info.major,
+            sys.version_info.minor,
+            sys.version_info.micro,
+        )
+
+        return {"User-Agent": user_agent}

@@ -2,12 +2,14 @@ import pathlib
 
 from setuptools import setup, find_packages
 
+from securionpay.__version__ import __version__
+
 HERE = pathlib.Path(__file__).parent
 INSTALL_REQUIRES = (HERE / "requirements.txt").read_text().splitlines()
 
 setup(
     name="securionpay",
-    version="1.0.1",
+    version=__version__,
     description="Python library for SecurionPay API",
     url="https://github.com/securionpay/securionpay-python",
     author="Grzegorz Terlikowski",
