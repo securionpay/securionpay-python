@@ -10,25 +10,30 @@ class Resource(object):
     def name(self):
         return self.__class__.__name__.lower()
 
-    def _get(self, path, params=None):
-        return self.__request("GET", path, params)
+    def _get(self, path, params=None, url=None):
+        return self.__request("GET", path, params=params, url=url)
 
-    def _post(self, path, params=None):
-        return self.__request("POST", path, params)
+    def _post(self, path, json=None, url=None):
+        return self.__request("POST", path, json=json, url=url)
 
-    def _delete(self, path, params=None):
-        return self.__request("DELETE", path, params)
+    def _multipart(self, path, params=None, files=None, url=None):
+        return self.__request("POST", path, params=params, files=files, url=url)
+
+    def _delete(self, path, params=None, url=None):
+        return self.__request("DELETE", path, params=params, url=url)
 
     @classmethod
-    def __request(cls, method, path, params=None):
-        url = api.url.rstrip("/") + path
-        data = {("params" if method in ["GET", "DELETE"] else "json"): params}
+    def __request(cls, method, path, params=None, json=None, files=None, url=None):
+        if url is None:
+            url = api.url.rstrip("/")
         resp = requests.request(
             method,
-            url,
+            url=url + path,
             auth=(api.secret_key, ""),
             headers=cls.__create_headers(),
-            **data
+            files=files,
+            params=params,
+            json=json,
         )
 
         json = resp.json()

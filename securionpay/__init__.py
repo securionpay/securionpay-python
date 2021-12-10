@@ -8,6 +8,7 @@ from securionpay import (
     customers,
     disputes,
     events,
+    file_uploads,
     fraud_warnings,
     plans,
     resource,
@@ -17,6 +18,7 @@ from securionpay import (
 from securionpay.exception import SecurionPayException
 
 url = "https://api.securionpay.com"
+uploads_url = "https://uploads.securionpay.com"
 secret_key = None
 
 blacklist = blacklist.Blacklist()
@@ -26,6 +28,7 @@ credits = credits.Credits()
 cross_sale_offers = cross_sale_offers.CrossSaleOffers()
 customers = customers.Customers()
 disputes = disputes.Disputes()
+file_uploads = file_uploads.FileUploads()
 events = events.Events()
 fraud_warnings = fraud_warnings.FraudWarnings()
 plans = plans.Plans()
