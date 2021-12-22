@@ -121,7 +121,8 @@ To connect to different backend:
 ```
 import securionpay as api
 api.secret_key = 'pk_test_myprivatekey'
-api.url = 'http://mysecurionenv.com'
+api.api_url = 'http://mysecurionenv.com'
+api.uploads_url = 'http://mysecurionenv.com'
 ```
 
 To run unit tests and check test coverage:

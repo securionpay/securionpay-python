@@ -25,7 +25,7 @@ class Resource(object):
     @classmethod
     def __request(cls, method, path, params=None, json=None, files=None, url=None):
         if url is None:
-            url = api.url.rstrip("/")
+            url = api.api_url.rstrip("/")
         resp = requests.request(
             method,
             url=url + path,

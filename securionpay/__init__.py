@@ -17,7 +17,7 @@ from securionpay import (
 )
 from securionpay.exception import SecurionPayException
 
-url = "https://api.securionpay.com"
+api_url = "https://api.securionpay.com"
 uploads_url = "https://uploads.securionpay.com"
 secret_key = None
 
