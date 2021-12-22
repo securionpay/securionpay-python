@@ -7,13 +7,7 @@ import securionpay as api
 
 
 def sign(checkout_request):
-    try:
-        # noinspection PyUnresolvedReferences
-        basestring
-    except NameError:
-        basestring = str
-
-    if not isinstance(checkout_request, basestring):
+    if not isinstance(checkout_request, str):
         checkout_request = json.dumps(
             checkout_request, sort_keys=True, separators=(",", ":")
         )
