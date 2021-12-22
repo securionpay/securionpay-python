@@ -1,22 +1,22 @@
 from .data.plans import one_week_plan_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
 class TestPlans(TestCase):
-    def test_create_and_get(self):
+    def test_create_and_get(self, api):
         # given
         plan_req = one_week_plan_req()
         # when
         created = api.plans.create(plan_req)
         got = api.plans.get(created["id"])
         # then
-        self.assertEqual(got["id"], created["id"])
-        self.assertEqual(got["amount"], plan_req["amount"])
-        self.assertEqual(got["currency"], plan_req["currency"])
-        self.assertEqual(got["interval"], plan_req["interval"])
-        self.assertEqual(got["name"], plan_req["name"])
+        assert got["id"] == created["id"]
+        assert got["amount"] == plan_req["amount"]
+        assert got["currency"] == plan_req["currency"]
+        assert got["interval"] == plan_req["interval"]
+        assert got["name"] == plan_req["name"]
 
-    def test_update(self):
+    def test_update(self, api):
         # given
         plan_req = one_week_plan_req()
         created = api.plans.create(plan_req)
@@ -25,13 +25,13 @@ class TestPlans(TestCase):
             created["id"], {"amount": 222, "currency": "PLN", "name": "Updated plan"}
         )
         # then
-        self.assertEqual(updated["id"], created["id"])
-        self.assertEqual(updated["interval"], plan_req["interval"])
-        self.assertEqual(updated["amount"], 222)
-        self.assertEqual(updated["currency"], "PLN")
-        self.assertEqual(updated["name"], "Updated plan")
+        assert updated["id"] == created["id"]
+        assert updated["interval"] == plan_req["interval"]
+        assert updated["amount"] == 222
+        assert updated["currency"] == "PLN"
+        assert updated["name"] == "Updated plan"
 
-    def test_delete(self):
+    def test_delete(self, api):
         # given
         plan_req = one_week_plan_req()
         created = api.plans.create(plan_req)
@@ -39,10 +39,10 @@ class TestPlans(TestCase):
         api.plans.delete(created["id"])
         updated = api.plans.get(created["id"])
         # then
-        self.assertNotIn("deleted", created)
-        self.assertTrue(updated["deleted"])
+        assert "deleted" not in created
+        assert updated["deleted"]
 
-    def test_list(self):
+    def test_list(self, api):
         # given
         plan1 = api.plans.create(one_week_plan_req())
         plan2 = api.plans.create(one_week_plan_req())

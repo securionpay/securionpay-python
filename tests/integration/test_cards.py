@@ -1,10 +1,10 @@
 from . import random_email, random_string
 from .data.cards import valid_card_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
 class TestCards(TestCase):
-    def test_create_and_get(self):
+    def test_create_and_get(self, api):
         # given
         customer = api.customers.create({"email": random_email()})
         card_req = {
@@ -23,10 +23,10 @@ class TestCards(TestCase):
         retrieved = api.cards.get(created["customerId"], created["id"])
 
         # then
-        self.assertCardMatchesRequest(created, card_req)
-        self.assertEqual(created, retrieved)
+        self.assert_card_matches_request(created, card_req)
+        assert created == retrieved
 
-    def test_update(self):
+    def test_update(self, api):
         # given
         customer = api.customers.create({"email": random_email()})
         created = api.cards.create(customer["id"], valid_card_req())
@@ -49,9 +49,9 @@ class TestCards(TestCase):
         expected = dict()
         expected.update(created)
         expected.update(update_request)
-        self.assertEqual(updated, expected)
+        assert updated == expected
 
-    def test_delete(self):
+    def test_delete(self, api):
         # given
         customer = api.customers.create({"email": random_email()})
         created = api.cards.create(customer["id"], valid_card_req())
@@ -61,10 +61,10 @@ class TestCards(TestCase):
         deleted = api.cards.get(created["customerId"], created["id"])
 
         # then
-        self.assertNotIn("deleted", created)
-        self.assertTrue(deleted["deleted"])
+        assert "deleted" not in created
+        assert deleted["deleted"]
 
-    def test_list(self):
+    def test_list(self, api):
         # given
         customer1 = api.customers.create({"email": random_email()})
         customer2 = api.customers.create({"email": random_email()})
@@ -79,6 +79,10 @@ class TestCards(TestCase):
         customer2_cards = api.cards.list(customer2["id"], {"limit": 1})
 
         # then
-        self.assertListResponseContainsExactlyById(customer1_cards, [card12, card11])
-        self.assertListResponseContainsExactlyById(customer1_cards_limit1, [card12])
-        self.assertListResponseContainsExactlyById(customer2_cards, [card21])
+        self.assert_list_response_contains_exactly_by_id(
+            customer1_cards, [card12, card11]
+        )
+        self.assert_list_response_contains_exactly_by_id(
+            customer1_cards_limit1, [card12]
+        )
+        self.assert_list_response_contains_exactly_by_id(customer2_cards, [card21])

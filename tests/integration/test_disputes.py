@@ -2,10 +2,10 @@ from waiting import wait
 
 from .data.cards import disputed_card_req
 from .data.charges import valid_charge_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
-def create_dispute():
+def create_dispute(api):
     charge = api.charges.create(valid_charge_req(card=disputed_card_req()))
     wait(
         lambda: api.charges.get(charge["id"]).get("disputed") is True,
@@ -19,17 +19,17 @@ def create_dispute():
 
 
 class TestDisputes(TestCase):
-    def test_get(self):
+    def test_get(self, api):
         # given
-        [dispute, charge] = create_dispute()
+        [dispute, charge] = create_dispute(api)
         # when
         retrieved = api.disputes.get(dispute["id"])
         # then
-        self.assertEqual(retrieved["charge"]["id"], charge["id"])
+        assert retrieved["charge"]["id"] == charge["id"]
 
-    def test_update(self):
+    def test_update(self, api):
         # given
-        [dispute, _] = create_dispute()
+        [dispute, _] = create_dispute(api)
         evidence_customer_name = "Test Customer"
         # when
         api.disputes.update(
@@ -37,20 +37,20 @@ class TestDisputes(TestCase):
         )
         updated = api.disputes.get(dispute["id"])
         # then
-        self.assertEqual(updated["evidence"]["customerName"], evidence_customer_name)
+        assert updated["evidence"]["customerName"] == evidence_customer_name
 
-    def test_close(self):
+    def test_close(self, api):
         # given
-        [dispute, _] = create_dispute()
+        [dispute, _] = create_dispute(api)
         # when
         api.disputes.close(dispute["id"])
         closed = api.disputes.get(dispute["id"])
         # then
-        self.assertTrue(closed["acceptedAsLost"])
+        assert closed["acceptedAsLost"]
 
-    def test_list(self):
+    def test_list(self, api):
         # given
-        [dispute, _] = create_dispute()
+        [dispute, _] = create_dispute(api)
         # when
         response = api.disputes.list({"limit": 100})
         # then

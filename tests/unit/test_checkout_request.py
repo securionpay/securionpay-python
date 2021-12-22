@@ -1,6 +1,7 @@
-import unittest
-import securionpay as api
 import json
+import unittest
+
+import securionpay as api
 
 
 class TestCheckoutRequest(unittest.TestCase):

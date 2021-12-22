@@ -1,5 +1,5 @@
 coverage
 mock
-nose
-waiting
+pytest
 python-dotenv
+waiting

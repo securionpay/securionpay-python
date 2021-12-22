@@ -2,11 +2,11 @@ from . import random_email
 from .data.cards import valid_card_req
 from .data.plans import one_week_plan_req
 from .data.subscriptions import subscription_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
 class TestSubscriptions(TestCase):
-    def test_create_and_get(self):
+    def test_create_and_get(self, api):
         # given
         customer = api.customers.create(
             {"email": random_email(), "card": valid_card_req()}
@@ -20,12 +20,12 @@ class TestSubscriptions(TestCase):
         got = api.subscriptions.get(created["id"])
 
         # then
-        self.assertIsNotNone(created["id"])
-        self.assertEqual(created, got)
-        self.assertEqual(created["customerId"], customer["id"])
-        self.assertEqual(created["planId"], plan["id"])
+        assert created["id"] is not None
+        assert created == got
+        assert created["customerId"] == customer["id"]
+        assert created["planId"] == plan["id"]
 
-    def test_update(self):
+    def test_update(self, api):
         # given
         customer = api.customers.create(
             {"email": random_email(), "card": valid_card_req()}
@@ -54,18 +54,18 @@ class TestSubscriptions(TestCase):
         updated = api.subscriptions.get(created["id"])
 
         # then
-        self.assertNotIn("shipping", created)
-        self.assertEqual(updated["id"], created["id"])
-        self.assertEqual(updated["planId"], plan["id"])
+        assert "shipping" not in created
+        assert updated["id"] == created["id"]
+        assert updated["planId"] == plan["id"]
 
         shipping = updated["shipping"]
-        self.assertEqual(shipping["name"], "Updated shipping")
-        self.assertEqual(shipping["address"]["line1"], "Updated line1")
-        self.assertEqual(shipping["address"]["line2"], "Updated line2")
-        self.assertEqual(shipping["address"]["zip"], "Updated zip")
-        self.assertEqual(shipping["address"]["city"], "Updated city")
-        self.assertEqual(shipping["address"]["state"], "Updated state")
-        self.assertEqual(shipping["address"]["country"], "CH")
+        assert shipping["name"] == "Updated shipping"
+        assert shipping["address"]["line1"] == "Updated line1"
+        assert shipping["address"]["line2"] == "Updated line2"
+        assert shipping["address"]["zip"] == "Updated zip"
+        assert shipping["address"]["city"] == "Updated city"
+        assert shipping["address"]["state"] == "Updated state"
+        assert shipping["address"]["country"] == "CH"
 
 
 def find_charge_success(response):

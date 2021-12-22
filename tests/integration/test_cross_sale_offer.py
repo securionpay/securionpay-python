@@ -1,10 +1,10 @@
 from .data.cross_sale_offers import valid_cross_sale_offer_with_charge
 
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
 class TestCrossSaleOffer(TestCase):
-    def test_create_and_get(self):
+    def test_create_and_get(self, api):
         # given
         offer_req = valid_cross_sale_offer_with_charge()
 
@@ -13,19 +13,17 @@ class TestCrossSaleOffer(TestCase):
         got = api.cross_sale_offers.get(created["id"])
 
         # then
-        self.assertIsNotNone(got["id"])
-        self.assertEqual(got["description"], offer_req["description"])
-        self.assertEqual(got["title"], offer_req["title"])
-        self.assertEqual(
-            got["termsAndConditionsUrl"], offer_req["termsAndConditionsUrl"]
-        )
-        self.assertEqual(got["template"], offer_req["template"])
-        self.assertEqual(got["companyName"], offer_req["companyName"])
-        self.assertEqual(got["companyLocation"], offer_req["companyLocation"])
-        self.assertEqual(got["charge"]["amount"], offer_req["charge"]["amount"])
-        self.assertEqual(got["charge"]["currency"], offer_req["charge"]["currency"])
+        assert got["id"] is not None
+        assert got["description"] == offer_req["description"]
+        assert got["title"] == offer_req["title"]
+        assert got["termsAndConditionsUrl"] == offer_req["termsAndConditionsUrl"]
+        assert got["template"] == offer_req["template"]
+        assert got["companyName"] == offer_req["companyName"]
+        assert got["companyLocation"] == offer_req["companyLocation"]
+        assert got["charge"]["amount"] == offer_req["charge"]["amount"]
+        assert got["charge"]["currency"] == offer_req["charge"]["currency"]
 
-    def test_update(self):
+    def test_update(self, api):
         # given
         offer_req = valid_cross_sale_offer_with_charge()
         created = api.cross_sale_offers.create(offer_req)
@@ -36,12 +34,12 @@ class TestCrossSaleOffer(TestCase):
         )
 
         # then
-        self.assertEqual(created["description"], offer_req["description"])
-        self.assertEqual(updated["description"], "updated description")
-        self.assertEqual(updated["charge"]["amount"], offer_req["charge"]["amount"])
-        self.assertEqual(updated["charge"]["currency"], offer_req["charge"]["currency"])
+        assert created["description"] == offer_req["description"]
+        assert updated["description"] == "updated description"
+        assert updated["charge"]["amount"] == offer_req["charge"]["amount"]
+        assert updated["charge"]["currency"] == offer_req["charge"]["currency"]
 
-    def test_delete(self):
+    def test_delete(self, api):
         # given
         offer_req = valid_cross_sale_offer_with_charge()
         created = api.cross_sale_offers.create(offer_req)
@@ -51,10 +49,10 @@ class TestCrossSaleOffer(TestCase):
         updated = api.cross_sale_offers.get(created["id"])
 
         # then
-        self.assertNotIn("deleted", created)
-        self.assertTrue(updated["deleted"])
+        assert "deleted" not in created
+        assert updated["deleted"]
 
-    def test_list(self):
+    def test_list(self, api):
         # given
         offer_req = valid_cross_sale_offer_with_charge()
         offer1 = api.cross_sale_offers.create(offer_req)

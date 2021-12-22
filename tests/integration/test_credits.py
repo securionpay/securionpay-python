@@ -1,10 +1,10 @@
 from .data.credits import valid_credit_req
 from .data.customers import valid_customer_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
 class TestCredits(TestCase):
-    def test_create_and_get(self):
+    def test_create_and_get(self, api):
         # given
         credit_req = valid_credit_req()
 
@@ -13,12 +13,12 @@ class TestCredits(TestCase):
         got = api.credits.get(created["id"])
 
         # then
-        self.assertEqual(created, got)
-        self.assertEqual(created["amount"], credit_req["amount"])
-        self.assertEqual(created["currency"], credit_req["currency"])
-        self.assertCardMatchesRequest(created["card"], credit_req["card"])
+        assert created == got
+        assert created["amount"] == credit_req["amount"]
+        assert created["currency"] == credit_req["currency"]
+        self.assert_card_matches_request(created["card"], credit_req["card"])
 
-    def test_update(self):
+    def test_update(self, api):
         # given
         credit_req = valid_credit_req()
         created = api.credits.create(credit_req)
@@ -32,17 +32,17 @@ class TestCredits(TestCase):
             },
         )
         # then
-        self.assertEqual(created["description"], credit_req["description"])
-        self.assertEqual(updated["description"], "updated description")
+        assert created["description"] == credit_req["description"]
+        assert updated["description"] == "updated description"
 
-        self.assertEqual(created["metadata"]["key"], credit_req["metadata"]["key"])
-        self.assertEqual(updated["metadata"]["key"], "updated value")
+        assert created["metadata"]["key"] == credit_req["metadata"]["key"]
+        assert updated["metadata"]["key"] == "updated value"
 
-        self.assertEqual(updated["amount"], credit_req["amount"])
-        self.assertEqual(updated["currency"], credit_req["currency"])
-        self.assertCardMatchesRequest(updated["card"], credit_req["card"])
+        assert updated["amount"] == credit_req["amount"]
+        assert updated["currency"] == credit_req["currency"]
+        self.assert_card_matches_request(updated["card"], credit_req["card"])
 
-    def test_list(self):
+    def test_list(self, api):
         # given
         customer = api.customers.create(valid_customer_req())
         credit_req = valid_credit_req(customerId=customer["id"])
@@ -57,9 +57,9 @@ class TestCredits(TestCase):
         )
 
         # then
-        self.assertListResponseContainsExactlyById(
+        self.assert_list_response_contains_exactly_by_id(
             all_credits, [credit3, credit2, credit1]
         )
-        self.assertListResponseContainsExactlyById(
+        self.assert_list_response_contains_exactly_by_id(
             credits_after_last_id, [credit2, credit1]
         )

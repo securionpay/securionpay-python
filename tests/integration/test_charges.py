@@ -1,10 +1,10 @@
 from .data.charges import valid_charge_req
 from .data.customers import valid_customer_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
 class TestCharges(TestCase):
-    def test_create_and_get(self):
+    def test_create_and_get(self, api):
         # given
         charge_req = valid_charge_req()
 
@@ -13,12 +13,12 @@ class TestCharges(TestCase):
         got = api.charges.get(created["id"])
 
         # then
-        self.assertEqual(created, got)
-        self.assertEqual(created["amount"], charge_req["amount"])
-        self.assertEqual(created["currency"], charge_req["currency"])
-        self.assertCardMatchesRequest(created["card"], charge_req["card"])
+        assert created == got
+        assert created["amount"] == charge_req["amount"]
+        assert created["currency"] == charge_req["currency"]
+        self.assert_card_matches_request(created["card"], charge_req["card"])
 
-    def test_update(self):
+    def test_update(self, api):
         # given
         charge_req = valid_charge_req()
         created = api.charges.create(charge_req)
@@ -32,17 +32,17 @@ class TestCharges(TestCase):
             },
         )
         # then
-        self.assertEqual(created["description"], charge_req["description"])
-        self.assertEqual(updated["description"], "updated description")
+        assert created["description"] == charge_req["description"]
+        assert updated["description"] == "updated description"
 
-        self.assertEqual(created["metadata"]["key"], charge_req["metadata"]["key"])
-        self.assertEqual(updated["metadata"]["key"], "updated value")
+        assert created["metadata"]["key"] == charge_req["metadata"]["key"]
+        assert updated["metadata"]["key"] == "updated value"
 
-        self.assertEqual(updated["amount"], charge_req["amount"])
-        self.assertEqual(updated["currency"], charge_req["currency"])
-        self.assertCardMatchesRequest(updated["card"], charge_req["card"])
+        assert updated["amount"] == charge_req["amount"]
+        assert updated["currency"] == charge_req["currency"]
+        self.assert_card_matches_request(updated["card"], charge_req["card"])
 
-    def test_capture(self):
+    def test_capture(self, api):
         # given
         charge_req = valid_charge_req(captured=False)
         created = api.charges.create(charge_req)
@@ -51,10 +51,10 @@ class TestCharges(TestCase):
         captured = api.charges.capture(created["id"])
 
         # then
-        self.assertFalse(created["captured"])
-        self.assertTrue(captured["captured"])
+        assert not created["captured"]
+        assert captured["captured"]
 
-    def test_refund(self):
+    def test_refund(self, api):
         # given
         charge_req = valid_charge_req()
         created = api.charges.create(charge_req)
@@ -63,10 +63,10 @@ class TestCharges(TestCase):
         refunded = api.charges.refund(created["id"])
 
         # then
-        self.assertFalse(created["refunded"])
-        self.assertTrue(refunded["refunded"])
+        assert not created["refunded"]
+        assert refunded["refunded"]
 
-    def test_list(self):
+    def test_list(self, api):
         # given
         customer = api.customers.create(valid_customer_req())
         charge_req = valid_charge_req(customerId=customer["id"])
@@ -81,9 +81,9 @@ class TestCharges(TestCase):
         )
 
         # then
-        self.assertListResponseContainsExactlyById(
+        self.assert_list_response_contains_exactly_by_id(
             all_charges, [charge3, charge2, charge1]
         )
-        self.assertListResponseContainsExactlyById(
+        self.assert_list_response_contains_exactly_by_id(
             charges_after_last_id, [charge2, charge1]
         )

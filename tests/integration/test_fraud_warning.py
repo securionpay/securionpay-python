@@ -2,10 +2,10 @@ from waiting import wait
 
 from .data.cards import fraud_warning_card_req
 from .data.charges import valid_charge_req
-from .testcase import api, TestCase
+from .testcase import TestCase
 
 
-def create_fraud_warning():
+def create_fraud_warning(api):
     charge = api.charges.create(valid_charge_req(card=fraud_warning_card_req()))
     # fmt: off
     wait(
@@ -22,17 +22,17 @@ def create_fraud_warning():
 
 
 class TestFraudWarning(TestCase):
-    def test_get(self):
+    def test_get(self, api):
         # given
-        [fraud_warning, charge] = create_fraud_warning()
+        [fraud_warning, charge] = create_fraud_warning(api)
         # when
         retrieved = api.fraud_warnings.get(fraud_warning["id"])
         # then
-        self.assertEqual(retrieved["charge"], charge["id"])
+        assert retrieved["charge"] == charge["id"]
 
-    def test_list(self):
+    def test_list(self, api):
         # given
-        [fraud_warning, _] = create_fraud_warning()
+        [fraud_warning, _] = create_fraud_warning(api)
         # when
         response = api.fraud_warnings.list({"limit": 100})
         # then
