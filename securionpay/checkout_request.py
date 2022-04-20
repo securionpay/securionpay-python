@@ -1,23 +1,19 @@
-import json
-import hmac
-import hashlib
 import base64
+import hashlib
+import hmac
+import json
+
 import securionpay as api
 
 
 def sign(checkout_request):
-    try:
-        basestring
-    except NameError:
-        basestring = str
-
-    if not isinstance(checkout_request, basestring):
+    if not isinstance(checkout_request, str):
         checkout_request = json.dumps(
             checkout_request, sort_keys=True, separators=(",", ":")
         )
 
     digest = hmac.new(
-        api.private_key.encode(),
+        api.secret_key.encode(),
         msg=checkout_request.encode(),
         digestmod=hashlib.sha256,
     ).hexdigest()

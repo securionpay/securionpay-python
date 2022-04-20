@@ -1,56 +1,89 @@
-from tests.integration.testcase import api, TestCase
-from tests.integration import random_email, random_string
+from .data.charges import valid_charge_req
+from .data.customers import valid_customer_req
+from .testcase import TestCase
 
 
 class TestCharges(TestCase):
-    def test_create(self):
-        email = random_email()
-        customer = api.customers.create({"email": email})
-        customer = api.customers.get(customer["id"])
-        self.assertEqual(customer["email"], email)
+    def test_create_and_get(self, api):
+        # given
+        charge_req = valid_charge_req()
 
-        cardholder_name = random_string()
-        card = api.cards.create(
-            customer["id"],
+        # when
+        created = api.charges.create(charge_req)
+        got = api.charges.get(created["id"])
+
+        # then
+        assert created == got
+        assert created["amount"] == charge_req["amount"]
+        assert created["currency"] == charge_req["currency"]
+        self.assert_card_matches_request(created["card"], charge_req["card"])
+
+    def test_update(self, api):
+        # given
+        charge_req = valid_charge_req()
+        created = api.charges.create(charge_req)
+
+        # when
+        updated = api.charges.update(
+            created["id"],
             {
-                "number": "4242424242424242",
-                "expMonth": "12",
-                "expYear": "2020",
-                "cvc": "123",
-                "cardholderName": cardholder_name,
+                "description": "updated description",
+                "metadata": {"key": "updated value"},
             },
         )
-        card = api.cards.get(card["customerId"], card["id"])
-        self.assertEqual(card["last4"], "4242")
-        self.assertEqual(card["expMonth"], "12")
-        self.assertEqual(card["expYear"], "2020")
-        self.assertEqual(card["cardholderName"], cardholder_name)
+        # then
+        assert created["description"] == charge_req["description"]
+        assert updated["description"] == "updated description"
 
-        charge = api.charges.create(
-            {"amount": 1000, "currency": "EUR", "customerId": card["customerId"]}
-        )
-        charge = api.charges.get(charge["id"])
-        self.assertEqual(charge["amount"], 1000)
-        self.assertEqual(charge["currency"], "EUR")
-        self.assertEqual(charge["customerId"], card["customerId"])
+        assert created["metadata"]["key"] == charge_req["metadata"]["key"]
+        assert updated["metadata"]["key"] == "updated value"
 
-    def test_create_twice(self):
-        customer = api.customers.create({"email": random_email()})
-        charge = api.charges.create(
-            {
-                "amount": 2000,
-                "currency": "EUR",
-                "customerId": customer["id"],
-                "card": {
-                    "number": "4242424242424242",
-                    "expMonth": "12",
-                    "expYear": "2055",
-                    "cvc": "123",
-                },
-            }
+        assert updated["amount"] == charge_req["amount"]
+        assert updated["currency"] == charge_req["currency"]
+        self.assert_card_matches_request(updated["card"], charge_req["card"])
+
+    def test_capture(self, api):
+        # given
+        charge_req = valid_charge_req(captured=False)
+        created = api.charges.create(charge_req)
+
+        # when
+        captured = api.charges.capture(created["id"])
+
+        # then
+        assert not created["captured"]
+        assert captured["captured"]
+
+    def test_refund(self, api):
+        # given
+        charge_req = valid_charge_req()
+        created = api.charges.create(charge_req)
+
+        # when
+        refunded = api.charges.refund(created["id"])
+
+        # then
+        assert not created["refunded"]
+        assert refunded["refunded"]
+
+    def test_list(self, api):
+        # given
+        customer = api.customers.create(valid_customer_req())
+        charge_req = valid_charge_req(customerId=customer["id"])
+        charge1 = api.charges.create(charge_req)
+        charge2 = api.charges.create(charge_req)
+        charge3 = api.charges.create(charge_req)
+
+        # when
+        all_charges = api.charges.list({"customerId": customer["id"]})
+        charges_after_last_id = api.charges.list(
+            {"customerId": customer["id"], "startingAfterId": charge3["id"]}
         )
-        second_charge = api.charges.create(
-            {"amount": 1000, "currency": "EUR", "customerId": charge["customerId"]}
+
+        # then
+        self.assert_list_response_contains_exactly_by_id(
+            all_charges, [charge3, charge2, charge1]
         )
-        self.assertEqual(second_charge["amount"], 1000)
-        self.assertEqual(second_charge["customerId"], charge["customerId"])
+        self.assert_list_response_contains_exactly_by_id(
+            charges_after_last_id, [charge2, charge1]
+        )

@@ -1,11 +1,12 @@
-import unittest
-import securionpay as api
 import json
+import unittest
+
+import securionpay as api
 
 
 class TestCheckoutRequest(unittest.TestCase):
     def setUp(self):
-        api.private_key = "pr_test_bu0GRzw3MzhT10fpxa1j9OHJ"
+        api.secret_key = "pr_test_bu0GRzw3MzhT10fpxa1j9OHJ"
 
     def test_from_string(self):
         self.assertEqual(
