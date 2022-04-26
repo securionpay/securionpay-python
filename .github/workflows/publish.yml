@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish:
-    if: github.repository == 'el-dot/securionpay-python'
+    if: github.repository == 'securionpay/securionpay-python'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
