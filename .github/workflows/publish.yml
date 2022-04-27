@@ -1,14 +1,10 @@
 name: Publish
-
 on:
   release:
-    types: [ published ]
-  push:
-    tags: [ 'v*.*.*' ]
+    types: [ prereleased, released ]
 
 jobs:
   publish:
-    if: github.repository == 'securionpay/securionpay-python'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,18 +15,21 @@ jobs:
       - name: Install pypa/build
         run: python -m pip install build --user
 
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip -r requirements.txt
+
       - name: Build a binary wheel and a source tarball
         run: python -m build --sdist --wheel
 
       - name: Publish distribution 📦 to Test PyPI
-        if: github.event_name == 'push'
+        if: github.event.action == 'prereleased'
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
 
       - name: Publish distribution 📦 to PyPI
-        if: github.event_name == 'release'
+        if: github.event.action == 'released'
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
