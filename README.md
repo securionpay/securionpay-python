@@ -15,25 +15,28 @@ Quick start
 ```python
 import securionpay as securionpay
 
-securionpay.secret_key = 'pk_test_my_private_key'
+securionpay.secret_key = 'pk_test_my_secret_key'
 
 try:
     customer = securionpay.customers.create({
         'email': 'user@example.com',
         'description': 'User description'
     })
+    print("Created customer:", customer)
     card = securionpay.cards.create(customer['id'], {
         'number': '4242424242424242',
         'expMonth': '12',
-        'expYear': '2020',
+        'expYear': '2023',
         'cvc': '123',
         'cardholderName': 'John Smith'
     })
+    print("Created card:", card)
     charge = securionpay.charges.create({
       'amount': 1000,
       'currency': 'EUR',
-      'customer_id': card['customer_id']
+      'customerId': card['customerId']
     })
+    print("Created charge:", charge)
 except securionpay.SecurionPayException as e:
   print(e)
 ```
@@ -118,16 +121,15 @@ at [https://securionpay.com/docs](https://securionpay.com/docs).
 Developing
 ----------
 
-Optionally setup a virtual environment (requires the `virtualenv` python package):
+Optionally setup a virtual environment
 ```sh
-virtualenv env
-source env/bin/activate
+python -m venv ./venv --clear
+source ./venv/bin/activate 
 ```
 
 Install the package dependencies:
 ```sh
-pip install -r requirements.txt
-pip install -r test_requirements.txt
+pip install -r requirements.txt -r test_requirements.txt
 ```
 
 To connect to different backend:
@@ -135,7 +137,7 @@ To connect to different backend:
 ```python
 import securionpay as api
 
-api.secret_key = 'pk_test_my_private_key'
+api.secret_key = 'pk_test_my_secret_key'
 api.api_url = 'https://api.mysecurionenv.com'
 api.uploads_url = 'https://uploads.mysecurionenv.com'
 ```
@@ -143,7 +145,7 @@ api.uploads_url = 'https://uploads.mysecurionenv.com'
 To run tests:
 
 ```sh
-SECRET_KEY=pk_test_my_private_key pytest tests
+SECRET_KEY=pk_test_my_secret_key pytest tests
 ```
 
 Format the package files using `black`:
