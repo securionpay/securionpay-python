@@ -10,6 +10,7 @@ from securionpay import (
     events,
     file_uploads,
     fraud_warnings,
+    payment_methods,
     plans,
     resource,
     subscriptions,
@@ -31,6 +32,7 @@ disputes = disputes.Disputes()
 file_uploads = file_uploads.FileUploads()
 events = events.Events()
 fraud_warnings = fraud_warnings.FraudWarnings()
+payment_methods = payment_methods.PaymentMethods()
 plans = plans.Plans()
 subscriptions = subscriptions.Subscriptions()
 tokens = tokens.Tokens()
