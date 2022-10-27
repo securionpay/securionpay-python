@@ -11,6 +11,7 @@ setup(
     name="securionpay",
     version=__version__,
     description="Python library for SecurionPay API",
+    long_description="Python library for SecurionPay API",
     url="https://github.com/securionpay/securionpay-python",
     author="SecurionPay Team",
     author_email="support@securionpay.com",
