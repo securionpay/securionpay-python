@@ -1,3 +1,8 @@
+Deprecation
+===================================
+
+This library is deprecated. Please use [Shift4 Python Library](https://github.com/shift4developer/shift4-python).
+
 Python library for SecurionPay API
 ===================================
 [![Build](https://github.com/securionpay/securionpay-python/actions/workflows/build.yml/badge.svg)](https://github.com/securionpay/securionpay-python/actions/workflows/build.yml)
